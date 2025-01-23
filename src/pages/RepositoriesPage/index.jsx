@@ -1,25 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Container, Sidebar, Main } from "./styles";
+import { Loading, Container, Sidebar, Main } from "./styles";
 
 import Profile from "./Profile/index";
 import Filter from "./filter/index";
 import Repositories from "./Repositories";
-import { getLangsFrom } from "../../services/api";
+import { getUser, getLangsFrom } from "../../services/api";
 
 function RepositoriesPage() {
+  const [user, setUser] = useState();
   const [currentLanguage, setLanguage] = useState();
+  const [loading, setLoading] = useState(true);
 
-  const user = {
-    login: "Nonono",
-    name: "Herick Kumata",
-    avatar_url: "https://avatars.githubusercontent.com/u/55540536?v=4",
-    followers: 0,
-    following: 0,
-    company: null,
-    blog: "https://google.com.br",
-    location: "São José dos Campos - SP",
-  };
+  setLoading(false);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const [userResponse] = await Promise.all([getUser("DevSamurai")]);
+      setUser(userResponse.data);
+    };
+
+    loadData();
+  }, []);
+
+  //  const user = {
+  //    login: "Nonono",
+  //    name: "Herick Kumata",
+  //    avatar_url: "https://avatars.githubusercontent.com/u/55540536?v=4",
+  //    followers: 0,
+  //    following: 0,
+  //    company: null,
+  //    blog: "https://google.com.br",
+  //    location: "São José dos Campos - SP",
+  //  };
 
   const repositories = [
     {
@@ -71,6 +84,10 @@ function RepositoriesPage() {
   const onFilterClick = (language) => {
     setLanguage(language);
   };
+
+  if (loading) {
+    return <Loading>Carregando...</Loading>;
+  }
 
   return (
     <Container>

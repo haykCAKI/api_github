@@ -5,10 +5,13 @@ const api = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
 });
 
+
+// axios é uma função assincrona
+export const getUser = async (login) => api.get(`/user/${login}`);
+
 export default api;
 
 export const getLangsFrom = (repositories) => {
-  
   let stats = repositories
     .map((repository) => repository.language)
     .reduce(

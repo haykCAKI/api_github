@@ -1,5 +1,13 @@
 import styles from "styled-components";
 
+
+export const Loading = styles.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+`;
+
 export const Container = styles.main`
     display:flex;
     min-height: 100vh;
