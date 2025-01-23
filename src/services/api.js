@@ -7,7 +7,9 @@ const api = axios.create({
 
 
 // axios é uma função assincrona
-export const getUser = async (login) => api.get(`/user/${login}`);
+export const getUser = async (login) => api.get(`/users/${login}`);
+
+export const getRepos = async (login) => api.get(`/users/${login}/repos`);
 
 export default api;
 
